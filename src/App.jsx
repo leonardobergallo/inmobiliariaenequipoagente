@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
+import { isInstalled } from './utils/pwa.js'
 
 // Components
 import InstallPrompt from './components/InstallPrompt'
@@ -41,13 +42,28 @@ function App() {
   const [hasSeenOnboarding, setHasSeenOnboarding] = useState(
     localStorage.getItem('hasSeenOnboarding') === 'true'
   )
+  const [isStandalone, setIsStandalone] = useState(false)
 
   useEffect(() => {
+    // Verificar si está instalada
+    const installed = isInstalled()
+    setIsStandalone(installed)
+
     // Simular carga inicial
     const timer = setTimeout(() => {
       try {
         const auth = localStorage.getItem('isAuthenticated')
-        setIsAuthenticated(auth === 'true')
+        
+        // Si está instalada como PWA, autenticar automáticamente y saltar onboarding
+        if (installed) {
+          setIsAuthenticated(true)
+          setHasSeenOnboarding(true)
+          localStorage.setItem('isAuthenticated', 'true')
+          localStorage.setItem('hasSeenOnboarding', 'true')
+        } else {
+          setIsAuthenticated(auth === 'true')
+        }
+        
         setIsLoading(false)
       } catch (error) {
         console.error('Error al cargar estado:', error)
@@ -64,26 +80,31 @@ function App() {
 
   return (
     <Router>
-      <InstallPrompt />
-      <InstallHelpButton />
+      {/* Solo mostrar prompts de instalación si NO está instalada */}
+      {!isStandalone && (
+        <>
+          <InstallPrompt />
+          <InstallHelpButton />
+        </>
+      )}
       <Routes>
-        {/* Onboarding - Only show if not seen */}
+        {/* Onboarding - Only show if not seen and not installed */}
         <Route 
           path="/onboarding" 
           element={
-            hasSeenOnboarding ? (
-              <Navigate to="/login" replace />
+            hasSeenOnboarding || isStandalone ? (
+              <Navigate to={isStandalone ? "/" : "/login"} replace />
             ) : (
               <Onboarding onComplete={() => setHasSeenOnboarding(true)} />
             )
           } 
         />
 
-        {/* Auth Routes */}
+        {/* Auth Routes - Skip if installed */}
         <Route 
           path="/login" 
           element={
-            isAuthenticated ? (
+            isAuthenticated || isStandalone ? (
               <Navigate to="/" replace />
             ) : (
               <Login onLogin={() => setIsAuthenticated(true)} />
@@ -93,7 +114,7 @@ function App() {
         <Route 
           path="/register" 
           element={
-            isAuthenticated ? (
+            isAuthenticated || isStandalone ? (
               <Navigate to="/" replace />
             ) : (
               <Register onRegister={() => setIsAuthenticated(true)} />
@@ -106,7 +127,7 @@ function App() {
         <Route 
           path="/" 
           element={
-            isAuthenticated ? (
+            isAuthenticated || isStandalone ? (
               <Home />
             ) : (
               <Navigate to="/onboarding" replace />

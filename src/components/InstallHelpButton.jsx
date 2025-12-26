@@ -8,8 +8,18 @@ const InstallHelpButton = () => {
   const [isIOS, setIsIOS] = useState(false)
 
   useEffect(() => {
-    // Solo mostrar si no está instalada
-    if (isInstalled()) {
+    // Verificar periódicamente si está instalada
+    const checkInstalled = () => {
+      if (isInstalled()) {
+        setShowButton(false)
+        setShowModal(false)
+        return true
+      }
+      return false
+    }
+
+    // Verificar inmediatamente
+    if (checkInstalled()) {
       return
     }
 
@@ -19,12 +29,24 @@ const InstallHelpButton = () => {
     
     setIsIOS(iOS)
 
-    // Mostrar botón después de 2 segundos
+    // Verificar cada segundo si se instaló
+    const checkInterval = setInterval(() => {
+      if (checkInstalled()) {
+        clearInterval(checkInterval)
+      }
+    }, 1000)
+
+    // Mostrar botón después de 2 segundos si no está instalada
     const timer = setTimeout(() => {
-      setShowButton(true)
+      if (!checkInstalled()) {
+        setShowButton(true)
+      }
     }, 2000)
 
-    return () => clearTimeout(timer)
+    return () => {
+      clearTimeout(timer)
+      clearInterval(checkInterval)
+    }
   }, [])
 
   const handleClick = () => {
@@ -89,9 +111,9 @@ const InstallHelpButton = () => {
         </button>
       )}
 
-      {showModal && (
-        <div className="fixed inset-0 z-[10000] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 animate-fade-in">
-          <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl max-w-md w-full p-6 animate-slide-up">
+      {showModal && !isInstalled() && (
+        <div className="fixed inset-0 z-[10000] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 animate-fade-in" style={{ paddingTop: 'env(safe-area-inset-top)', paddingBottom: 'env(safe-area-inset-bottom)' }}>
+          <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto p-6 animate-slide-up" style={{ maxHeight: 'calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 2rem)' }}>
             {/* Header */}
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-3">

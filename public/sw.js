@@ -32,21 +32,18 @@ const networkFirst = async (request) => {
 
 // Instalación del Service Worker
 self.addEventListener('install', (event) => {
-  // Activar inmediatamente sin esperar
+  // No esperar a que se complete el cache, activar inmediatamente
   self.skipWaiting()
   
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then((cache) => {
-        console.log('[SW] Cache abierto:', CACHE_NAME)
+        console.log('Cache abierto')
         // Intentar cachear pero no bloquear si falla
         return cache.addAll(urlsToCache).catch(err => {
-          console.log('[SW] Error cacheando recursos iniciales:', err)
+          console.log('Error cacheando recursos iniciales:', err)
           // No bloquear la instalación si falla
         })
-      })
-      .then(() => {
-        console.log('[SW] Instalación completada')
       })
   )
 })
@@ -73,7 +70,7 @@ self.addEventListener('activate', (event) => {
   )
 })
 
-// Interceptar peticiones - Estrategia más permisiva
+// Interceptar peticiones
 self.addEventListener('fetch', (event) => {
   // Solo cachear peticiones GET
   if (event.request.method !== 'GET') {
@@ -82,44 +79,47 @@ self.addEventListener('fetch', (event) => {
 
   const url = new URL(event.request.url)
   
-  // NO interceptar peticiones de navegación - dejar que el navegador las maneje directamente
-  // Esto evita problemas de pantalla en blanco en modo standalone
+  // Para navegación (HTML), siempre intentar red primero
   if (event.request.mode === 'navigate' || event.request.destination === 'document') {
-    // No interceptar, dejar que el navegador maneje la navegación
+    event.respondWith(
+      networkFirst(event.request).catch(() => {
+        // Si falla, intentar desde cache
+        return caches.match('/index.html').then(cached => {
+          if (cached) return cached
+          // Si no hay cache, devolver respuesta básica
+          return new Response(`
+            <!DOCTYPE html>
+            <html>
+              <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Cargando...</title>
+              </head>
+              <body>
+                <div style="display: flex; align-items: center; justify-content: center; height: 100vh;">
+                  <p>Cargando aplicación...</p>
+                </div>
+                <script>window.location.reload()</script>
+              </body>
+            </html>
+          `, {
+            headers: { 'Content-Type': 'text/html' }
+          })
+        })
+      })
+    )
     return
   }
 
-  // Para assets estáticos (JS, CSS, imágenes), usar network first con fallback
-  // Pero solo si es necesario, de lo contrario dejar pasar
-  if (url.pathname.startsWith('/assets/') || 
-      url.pathname.endsWith('.js') || 
-      url.pathname.endsWith('.css') ||
-      url.pathname.endsWith('.png') ||
-      url.pathname.endsWith('.jpg') ||
-      url.pathname.endsWith('.svg')) {
-    
-    event.respondWith(
-      fetch(event.request)
-        .then(response => {
-          // Si la red funciona, cachear y devolver
-          if (response && response.ok) {
-            const responseClone = response.clone()
-            caches.open(CACHE_NAME).then(cache => {
-              cache.put(event.request, responseClone)
-            })
-          }
-          return response
-        })
-        .catch(() => {
-          // Si falla la red, intentar desde cache
-          return caches.match(event.request).then(cached => {
-            if (cached) return cached
-            // Si no hay cache, intentar fetch de nuevo (último intento)
-            return fetch(event.request)
-          })
-        })
-    )
-  }
-  // Para otros recursos, no interceptar
+  // Para assets (JS, CSS, imágenes), network first pero con fallback a cache
+  event.respondWith(
+    networkFirst(event.request).catch(() => {
+      return caches.match(event.request).then(cached => {
+        if (cached) return cached
+        // Si no hay cache, dejar que el navegador maneje
+        return fetch(event.request)
+      })
+    })
+  )
 })
 
