@@ -1,6 +1,9 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 
+// Components
+import InstallPrompt from './components/InstallPrompt'
+
 // Auth Pages
 import Onboarding from './pages/Onboarding'
 import Login from './pages/Login'
@@ -43,6 +46,7 @@ function App() {
 
   return (
     <Router>
+      <InstallPrompt />
       <Routes>
         {/* Onboarding - Only show if not seen */}
         <Route 

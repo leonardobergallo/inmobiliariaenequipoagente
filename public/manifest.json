@@ -4,6 +4,7 @@
   "description": "Inmobiliaria en Equipo Agente - Búsqueda y gestión de propiedades inmobiliarias",
   "start_url": "/",
   "display": "standalone",
+  "prefer_related_applications": false,
   "background_color": "#ffffff",
   "theme_color": "#137fec",
   "orientation": "portrait-primary",
