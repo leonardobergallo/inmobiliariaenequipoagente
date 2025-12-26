@@ -6,6 +6,12 @@
   box-sizing: border-box;
 }
 
+html {
+  height: 100%;
+  height: 100dvh; /* Dynamic viewport height para iOS */
+  overflow-x: hidden;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -18,17 +24,11 @@ body {
   width: 100%;
   min-height: 100vh;
   min-height: 100dvh; /* Dynamic viewport height para móvil */
+  min-height: -webkit-fill-available; /* Para iOS en modo standalone */
 }
 
-/* Safe area para dispositivos con notch */
-@supports (padding: max(0px)) {
-  body {
-    padding-top: env(safe-area-inset-top);
-    padding-bottom: env(safe-area-inset-bottom);
-    padding-left: env(safe-area-inset-left);
-    padding-right: env(safe-area-inset-right);
-  }
-}
+/* Safe area para dispositivos con notch - ya está en index.html */
+/* No duplicar aquí para evitar conflictos */
 
 .material-symbols-outlined {
   font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
