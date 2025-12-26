@@ -1,16 +1,18 @@
 // Utilidades para PWA
 export const registerServiceWorker = () => {
   if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker
-        .register('/sw.js')
-        .then((registration) => {
-          console.log('SW registrado:', registration)
-        })
-        .catch((error) => {
-          console.log('Error al registrar SW:', error)
-        })
-    })
+    // Registrar inmediatamente, no esperar a 'load'
+    navigator.serviceWorker
+      .register('/sw.js')
+      .then((registration) => {
+        console.log('SW registrado:', registration)
+        // Verificar actualizaciones
+        registration.update()
+      })
+      .catch((error) => {
+        console.log('Error al registrar SW:', error)
+        // No bloquear la app si el SW falla
+      })
   }
 }
 

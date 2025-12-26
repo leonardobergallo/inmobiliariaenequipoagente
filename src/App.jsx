@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 
 // Components
 import InstallPrompt from './components/InstallPrompt'
+import LoadingScreen from './components/LoadingScreen'
 
 // Auth Pages
 import Onboarding from './pages/Onboarding'
@@ -34,15 +35,31 @@ import News from './pages/News'
 import FAQ from './pages/FAQ'
 
 function App() {
+  const [isLoading, setIsLoading] = useState(true)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [hasSeenOnboarding, setHasSeenOnboarding] = useState(
     localStorage.getItem('hasSeenOnboarding') === 'true'
   )
 
   useEffect(() => {
-    const auth = localStorage.getItem('isAuthenticated')
-    setIsAuthenticated(auth === 'true')
+    // Simular carga inicial
+    const timer = setTimeout(() => {
+      try {
+        const auth = localStorage.getItem('isAuthenticated')
+        setIsAuthenticated(auth === 'true')
+        setIsLoading(false)
+      } catch (error) {
+        console.error('Error al cargar estado:', error)
+        setIsLoading(false)
+      }
+    }, 500) // 500ms de carga mínima
+
+    return () => clearTimeout(timer)
   }, [])
+
+  if (isLoading) {
+    return <LoadingScreen />
+  }
 
   return (
     <Router>
