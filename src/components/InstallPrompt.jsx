@@ -73,8 +73,8 @@ const InstallPrompt = () => {
   }
 
   return (
-    <div className="fixed bottom-20 left-0 right-0 z-50 px-4 md:max-w-md md:mx-auto md:left-1/2 md:transform md:-translate-x-1/2">
-      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 p-4 flex items-center gap-3">
+    <div className="fixed bottom-20 left-0 right-0 z-50 px-4 md:max-w-md md:mx-auto md:left-1/2 md:transform md:-translate-x-1/2 animate-slide-up">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 p-4 flex items-center gap-3 backdrop-blur-sm">
         <div className="flex-shrink-0">
           <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
             <span className="material-symbols-outlined text-primary text-2xl">download</span>
@@ -84,9 +84,9 @@ const InstallPrompt = () => {
           <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-1">
             Instalar App
           </h3>
-          <p className="text-xs text-gray-600 dark:text-gray-400">
+          <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed">
             {isIOS 
-              ? 'Toca el botón compartir y selecciona "Agregar a pantalla de inicio"'
+              ? 'Toca el botón compartir 📤 y selecciona "Agregar a pantalla de inicio"'
               : 'Instala la app para acceso rápido desde tu pantalla de inicio'
             }
           </p>
@@ -95,14 +95,14 @@ const InstallPrompt = () => {
           {!isIOS && (
             <button
               onClick={handleInstall}
-              className="px-4 py-2 bg-primary text-white text-sm font-semibold rounded-lg hover:bg-blue-600 transition-colors shadow-lg"
+              className="px-4 py-2 bg-primary text-white text-sm font-semibold rounded-lg hover:bg-blue-600 active:scale-95 transition-all shadow-lg"
             >
               Instalar
             </button>
           )}
           <button
             onClick={handleClose}
-            className="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+            className="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 active:scale-95 transition-all rounded-full hover:bg-gray-100 dark:hover:bg-gray-700"
             aria-label="Cerrar"
           >
             <span className="material-symbols-outlined text-xl">close</span>
