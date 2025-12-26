@@ -7,39 +7,61 @@ const InstallPrompt = () => {
   const [isStandalone, setIsStandalone] = useState(false)
 
   useEffect(() => {
-    // Detectar si ya está instalada
-    if (isInstalled()) {
-      setIsStandalone(true)
-      return
-    }
+    // Pequeño delay para asegurar que todo esté cargado
+    const timer = setTimeout(() => {
+      // Detectar si ya está instalada
+      const installed = isInstalled()
+      if (installed) {
+        setIsStandalone(true)
+        console.log('App ya está instalada, no mostrar prompt')
+        return
+      }
 
-    // Detectar iOS
-    const iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream
-    setIsIOS(iOS)
+      // Detectar iOS - método más robusto
+      const iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || 
+                  (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1) ||
+                  window.navigator.standalone === true
+      
+      setIsIOS(iOS)
+      console.log('iOS detectado:', iOS, 'User Agent:', navigator.userAgent)
 
-    // Para iOS: mostrar siempre el prompt si no está instalada
-    if (iOS) {
-      setShowPrompt(true)
-      return
-    }
+      // Para iOS: mostrar siempre el prompt si no está instalada
+      if (iOS) {
+        // Verificar si fue cerrado recientemente (reducido a 1 hora para testing)
+        const dismissedTime = localStorage.getItem('installPromptDismissed')
+        const oneHourAgo = Date.now() - (60 * 60 * 1000) // 1 hora
+        
+        if (!dismissedTime || parseInt(dismissedTime) < oneHourAgo) {
+          setShowPrompt(true)
+          console.log('Mostrando prompt de instalación para iOS')
+        } else {
+          console.log('Prompt cerrado recientemente, no mostrar')
+        }
+        return
+      }
 
-    // Para Android/Desktop: mostrar solo si hay deferredPrompt
-    if (window.deferredPrompt) {
-      setShowPrompt(true)
-    }
+      // Para Android/Desktop: mostrar solo si hay deferredPrompt
+      if (window.deferredPrompt) {
+        setShowPrompt(true)
+        console.log('Mostrando prompt de instalación para Android/Desktop')
+      }
 
-    // Escuchar el evento beforeinstallprompt
-    const handleBeforeInstallPrompt = (e) => {
-      e.preventDefault()
-      window.deferredPrompt = e
-      setShowPrompt(true)
-    }
+      // Escuchar el evento beforeinstallprompt
+      const handleBeforeInstallPrompt = (e) => {
+        e.preventDefault()
+        window.deferredPrompt = e
+        setShowPrompt(true)
+        console.log('beforeinstallprompt recibido')
+      }
 
-    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt)
+      window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt)
 
-    return () => {
-      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt)
-    }
+      return () => {
+        window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt)
+      }
+    }, 1000) // 1 segundo de delay para asegurar renderizado
+
+    return () => clearTimeout(timer)
   }, [])
 
   const handleInstall = () => {
@@ -57,24 +79,41 @@ const InstallPrompt = () => {
 
   const handleClose = () => {
     setShowPrompt(false)
-    // Guardar en localStorage para no mostrar de nuevo por un tiempo
+    // Guardar en localStorage para no mostrar de nuevo por un tiempo (1 hora)
     localStorage.setItem('installPromptDismissed', Date.now().toString())
   }
+
+  // Función para forzar mostrar el prompt (útil para debugging)
+  const forceShow = () => {
+    localStorage.removeItem('installPromptDismissed')
+    setShowPrompt(true)
+  }
+
+  // Exponer función global para debugging
+  useEffect(() => {
+    window.showInstallPrompt = forceShow
+    return () => {
+      delete window.showInstallPrompt
+    }
+  }, [])
 
   // No mostrar si ya está instalada o si el usuario cerró el prompt recientemente
   if (isStandalone || !showPrompt) {
     return null
   }
 
-  // Verificar si el usuario cerró el prompt en las últimas 24 horas
+  // Verificar si el usuario cerró el prompt en la última hora (reducido para testing)
   const dismissedTime = localStorage.getItem('installPromptDismissed')
-  if (dismissedTime && Date.now() - parseInt(dismissedTime) < 24 * 60 * 60 * 1000) {
+  const oneHourAgo = Date.now() - (60 * 60 * 1000) // 1 hora
+  
+  if (dismissedTime && parseInt(dismissedTime) > oneHourAgo) {
+    console.log('Prompt cerrado recientemente, no mostrar')
     return null
   }
 
   return (
-    <div className="fixed bottom-20 left-0 right-0 z-50 px-4 md:max-w-md md:mx-auto md:left-1/2 md:transform md:-translate-x-1/2 animate-slide-up">
-      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 p-4 flex items-center gap-3 backdrop-blur-sm">
+    <div className="fixed bottom-20 left-0 right-0 z-[9999] px-4 md:max-w-md md:mx-auto md:left-1/2 md:transform md:-translate-x-1/2 animate-slide-up" style={{ pointerEvents: 'auto' }}>
+      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl border-2 border-primary/20 dark:border-gray-700 p-4 flex items-center gap-3 backdrop-blur-sm">
         <div className="flex-shrink-0">
           <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
             <span className="material-symbols-outlined text-primary text-2xl">download</span>

@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 
 // Components
 import InstallPrompt from './components/InstallPrompt'
+import InstallHelpButton from './components/InstallHelpButton'
 import LoadingScreen from './components/LoadingScreen'
 
 // Auth Pages
@@ -64,6 +65,7 @@ function App() {
   return (
     <Router>
       <InstallPrompt />
+      <InstallHelpButton />
       <Routes>
         {/* Onboarding - Only show if not seen */}
         <Route 
