@@ -63,8 +63,18 @@ const ProposalDetail = () => {
       if (e.key === 'ArrowRight' || e.key === ' ') nextSlide()
       if (e.key === 'ArrowLeft') prevSlide()
     }
+    
+    const handleWheel = (e) => {
+      if (e.deltaY > 30) nextSlide()
+      if (e.deltaY < -30) prevSlide()
+    }
+    
     window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
+    window.addEventListener('wheel', handleWheel, { passive: true })
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown)
+      window.removeEventListener('wheel', handleWheel)
+    }
   }, [currentSlide])
 
   const renderSlide = () => {
