@@ -36,6 +36,18 @@ import PublishProperty from './pages/PublishProperty'
 import News from './pages/News'
 import FAQ from './pages/FAQ'
 
+// IT360 Modules
+import IT360Dashboard from './pages/IT360Dashboard'
+import ConsortiumExpenses from './pages/ConsortiumExpenses'
+import Rentals from './pages/Rentals'
+import CRM from './pages/CRM'
+import RealEstatePortal from './pages/RealEstatePortal'
+import AgencyProfile from './pages/AgencyProfile'
+import Ecommerce from './pages/Ecommerce'
+import ProposalSelector from './pages/ProposalSelector'
+import SalesDashboard from './pages/SalesDashboard'
+import ProposalDetail from './pages/ProposalDetail'
+
 function App() {
   const [isLoading, setIsLoading] = useState(true)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -127,11 +139,7 @@ function App() {
         <Route 
           path="/" 
           element={
-            isAuthenticated || isStandalone ? (
-              <Home />
-            ) : (
-              <Navigate to="/onboarding" replace />
-            )
+            <SalesDashboard />
           } 
         />
         <Route path="/search" element={<SearchResults />} />
@@ -154,6 +162,20 @@ function App() {
         <Route path="/publish" element={<PublishProperty />} />
         <Route path="/news" element={<News />} />
         <Route path="/faq" element={<FAQ />} />
+
+        {/* IT360 Routes */}
+        <Route path="/demos" element={<IT360Dashboard />} />
+        <Route path="/it360" element={<ProposalSelector />} />
+        <Route path="/expenses" element={<ConsortiumExpenses />} />
+        <Route path="/rentals" element={<Rentals />} />
+        <Route path="/crm" element={<CRM />} />
+        <Route path="/portal" element={<RealEstatePortal />} />
+        <Route path="/agencia/:id" element={<AgencyProfile />} />
+        <Route path="/ecommerce" element={<Ecommerce />} />
+        
+        {/* Commercial Proposals */}
+        <Route path="/propuestas" element={<SalesDashboard />} />
+        <Route path="/propuesta/:type/:client" element={<ProposalDetail />} />
 
         {/* Default redirect */}
         <Route path="*" element={<Navigate to="/" replace />} />

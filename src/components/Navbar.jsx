@@ -7,10 +7,12 @@ const Navbar = () => {
   const isActive = (path) => location.pathname === path
 
   const navItems = [
-    { path: '/', icon: 'home', label: 'Inicio' },
-    { path: '/favorites', icon: 'favorite', label: 'Favoritos' },
-    { path: '/chat', icon: 'chat', label: 'Mensajes' },
-    { path: '/profile', icon: 'person', label: 'Perfil' },
+    { path: '/it360', icon: 'apps', label: 'Software' },
+    { path: '/propuestas', icon: 'description', label: 'Propuestas' },
+    { path: '/portal', icon: 'home', label: 'Portal' },
+    { path: '/crm', icon: 'group', label: 'CRM' },
+    { path: '/rentals', icon: 'key', label: 'Alquileres' },
+    { path: '/expenses', icon: 'apartment', label: 'Expensas' },
   ]
 
   return (
