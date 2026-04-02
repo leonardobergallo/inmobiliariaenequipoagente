@@ -3,8 +3,6 @@ import { useState, useEffect } from 'react'
 import { isInstalled } from './utils/pwa.js'
 
 // Components
-import InstallPrompt from './components/InstallPrompt'
-import InstallHelpButton from './components/InstallHelpButton'
 import LoadingScreen from './components/LoadingScreen'
 
 // Auth Pages
@@ -57,16 +55,13 @@ function App() {
   const [isStandalone, setIsStandalone] = useState(false)
 
   useEffect(() => {
-    // Verificar si está instalada
     const installed = isInstalled()
     setIsStandalone(installed)
 
-    // Simular carga inicial
     const timer = setTimeout(() => {
       try {
         const auth = localStorage.getItem('isAuthenticated')
-        
-        // Si está instalada como PWA, autenticar automáticamente y saltar onboarding
+
         if (installed) {
           setIsAuthenticated(true)
           setHasSeenOnboarding(true)
@@ -75,13 +70,13 @@ function App() {
         } else {
           setIsAuthenticated(auth === 'true')
         }
-        
+
         setIsLoading(false)
       } catch (error) {
         console.error('Error al cargar estado:', error)
         setIsLoading(false)
       }
-    }, 500) // 500ms de carga mínima
+    }, 500)
 
     return () => clearTimeout(timer)
   }, [])
@@ -92,78 +87,59 @@ function App() {
 
   return (
     <Router>
-      {/* Solo mostrar prompts de instalación si NO está instalada */}
-      {!isStandalone && (
-        <>
-          <InstallPrompt />
-          <InstallHelpButton />
-        </>
-      )}
       <Routes>
-        {/* Onboarding - Only show if not seen and not installed */}
-        <Route 
-          path="/onboarding" 
+        <Route
+          path="/onboarding"
           element={
             hasSeenOnboarding || isStandalone ? (
-              <Navigate to={isStandalone ? "/" : "/login"} replace />
+              <Navigate to={isStandalone ? '/' : '/login'} replace />
             ) : (
               <Onboarding onComplete={() => setHasSeenOnboarding(true)} />
             )
-          } 
+          }
         />
 
-        {/* Auth Routes - Skip if installed */}
-        <Route 
-          path="/login" 
+        <Route
+          path="/login"
           element={
             isAuthenticated || isStandalone ? (
               <Navigate to="/" replace />
             ) : (
               <Login onLogin={() => setIsAuthenticated(true)} />
             )
-          } 
+          }
         />
-        <Route 
-          path="/register" 
+        <Route
+          path="/register"
           element={
             isAuthenticated || isStandalone ? (
               <Navigate to="/" replace />
             ) : (
               <Register onRegister={() => setIsAuthenticated(true)} />
             )
-          } 
+          }
         />
         <Route path="/forgot-password" element={<ForgotPassword />} />
 
-        {/* Main Routes */}
-        <Route 
-          path="/" 
-          element={
-            <SalesDashboard />
-          } 
-        />
+        <Route path="/" element={<SalesDashboard />} />
         <Route path="/search" element={<SearchResults />} />
         <Route path="/property/:id" element={<PropertyDetail />} />
         <Route path="/property/:id/tour" element={<VirtualTour />} />
 
-        {/* User Routes */}
         <Route path="/profile" element={<Profile />} />
         <Route path="/favorites" element={<Favorites />} />
         <Route path="/chat" element={<Chat />} />
         <Route path="/contact/:agentId?" element={<Contact />} />
 
-        {/* Tool Routes */}
         <Route path="/calculator" element={<MortgageCalculator />} />
         <Route path="/map" element={<PropertyMap />} />
         <Route path="/compare" element={<CompareProperties />} />
         <Route path="/alerts" element={<PropertyAlerts />} />
 
-        {/* Additional Routes */}
         <Route path="/publish" element={<PublishProperty />} />
         <Route path="/news" element={<News />} />
         <Route path="/faq" element={<FAQ />} />
 
-        {/* IT360 Routes */}
         <Route path="/demos" element={<IT360Dashboard />} />
         <Route path="/it360" element={<ProposalSelector />} />
         <Route path="/expenses" element={<ConsortiumExpenses />} />
@@ -172,12 +148,10 @@ function App() {
         <Route path="/portal" element={<RealEstatePortal />} />
         <Route path="/agencia/:id" element={<AgencyProfile />} />
         <Route path="/ecommerce" element={<Ecommerce />} />
-        
-        {/* Commercial Proposals */}
+
         <Route path="/propuestas" element={<SalesDashboard />} />
         <Route path="/propuesta/:type/:client" element={<ProposalDetail />} />
 
-        {/* Default redirect */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>
@@ -185,4 +159,3 @@ function App() {
 }
 
 export default App
-
