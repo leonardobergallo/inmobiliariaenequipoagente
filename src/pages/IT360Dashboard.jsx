@@ -1,5 +1,8 @@
 import { useNavigate, useLocation } from 'react-router-dom'
 
+const proposalUrl = (type, client = 'Inmobiliaria', slide = 'cover') =>
+  `/propuesta/${type}/${encodeURIComponent(client)}?slide=${slide}`
+
 const currentProjects = [
   {
     title: 'IT360',
@@ -52,19 +55,21 @@ const FloatingMenu = () => {
   const menuItems = [
     { label: 'Presentacion', icon: '💼', onClick: () => navigate('/') },
     { label: 'IT360', icon: '🧩', onClick: () => navigate('/it360') },
-    { label: 'Portal', icon: '🏠', onClick: () => navigate('/portal') },
-    { label: 'CRM', icon: '📊', onClick: () => navigate('/crm') },
-    { label: 'Alquileres', icon: '🔑', onClick: () => navigate('/rentals') },
-    { label: 'Expensas', icon: '🏢', onClick: () => navigate('/expenses') }
+    { label: 'Portal', icon: '🏠', onClick: () => navigate(proposalUrl('portal')) },
+    { label: 'CRM', icon: '📊', onClick: () => navigate(proposalUrl('crm')) },
+    { label: 'Alquileres', icon: '🔑', onClick: () => navigate(proposalUrl('alquileres')) },
+    { label: 'Expensas', icon: '🏢', onClick: () => navigate(proposalUrl('expensas')) },
+    { label: 'Market', icon: '🏪', onClick: () => navigate(proposalUrl('portal', 'Inmobiliaria', 'projects')) }
   ]
 
   const isActive = (label) => {
     if (label === 'Presentacion') return location.pathname === '/'
     if (label === 'IT360') return location.pathname === '/it360'
-    if (label === 'Portal') return location.pathname === '/portal'
-    if (label === 'CRM') return location.pathname === '/crm'
-    if (label === 'Alquileres') return location.pathname === '/rentals'
-    if (label === 'Expensas') return location.pathname === '/expenses'
+    if (label === 'Portal') return location.pathname.startsWith('/propuesta/portal/')
+    if (label === 'CRM') return location.pathname.startsWith('/propuesta/crm/')
+    if (label === 'Alquileres') return location.pathname.startsWith('/propuesta/alquileres/')
+    if (label === 'Expensas') return location.pathname.startsWith('/propuesta/expensas/')
+    if (label === 'Market') return location.pathname.startsWith('/propuesta/portal/')
     return false
   }
 
@@ -85,13 +90,6 @@ const FloatingMenu = () => {
             <span className="hidden font-medium lg:inline">{item.label}</span>
           </button>
         ))}
-        <button
-          onClick={() => window.open('https://www.marketsantafe.com.ar/inmobiliaria/inmobiliaria-solar', '_blank', 'noopener,noreferrer')}
-          className="flex items-center gap-2 rounded-xl px-4 py-2 text-white/70 transition hover:bg-white/10 hover:text-white"
-        >
-          <span>ðŸª</span>
-          <span className="hidden font-medium lg:inline">Market</span>
-        </button>
       </div>
     </div>
   )
