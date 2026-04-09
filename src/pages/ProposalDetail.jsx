@@ -11,12 +11,12 @@ const proposals = {
     features: ['Propiedades', 'Propietarios', 'Inquilinos', 'Contratos', 'Pagos', 'Reportes', 'Alertas', 'Historial']
   },
   web: {
-    title: 'Pagina Web Inmobiliaria',
+    title: 'Pagina Web Inmobiliaria Profesional',
     icon: '🌐',
-    price: '$299.000',
-    priceMonth: '$15.000/mes',
+    price: '$359.000',
+    priceMonth: '$59.000/mes',
     bgGradient: 'from-blue-500 to-cyan-500',
-    features: ['Diseno profesional', 'Propiedades', 'Responsive', 'Tu marca', 'SEO', 'Galeria']
+    features: ['Diseno moderno responsive', 'Catalogo de propiedades', 'Filtros inteligentes', 'Ficha individual por propiedad', 'WhatsApp y formulario', 'SEO inicial']
   },
   expensas: {
     title: 'Sistema de Expensas',
@@ -65,7 +65,7 @@ const currentProjects = [
   },
   {
     title: 'Portal Inmobiliario',
-    description: 'Proyecto interno de inmobiliaria en este repo',
+    description: 'Ejemplo interno de inmobiliaria disponible en este repo.',
     icon: '📐',
     url: '/portal'
   },
@@ -79,13 +79,13 @@ const currentProjects = [
     title: 'CRM Inmobiliario',
     description: 'Sistema activo de gestion comercial',
     icon: '🏢',
-    url: 'https://crminmobiliaria-neon.vercel.app/demo'
+    url: 'https://crminmobiliaria-9c9xcypfx-marketsantafeoficial-a11ys-projects.vercel.app/demo'
   },
   {
     title: 'Sistema de Alquileres',
     description: 'Sistema activo para administracion de alquileres',
     icon: '🔑',
-    url: 'https://administracion-alquileres-bigger-n09npjepa.vercel.app/'
+    url: 'https://administracion-alquileres-bigger2-g58w8h4pi-leonardobergallo.vercel.app/dashboard'
   },
   {
     title: 'Sistema de Expensas',
@@ -97,41 +97,96 @@ const currentProjects = [
 
 const pdfLibrary = {
   web: [
-    { label: 'Descargar PDF Web Inmobiliaria', href: '/pdf/propuesta-web-inmobiliaria-it360.pdf' }
+    { label: 'Descargar PDF Portal Inmobiliario', href: '/pdf/portal-inmobiliario-it360.pdf' }
   ],
   alquileres: [
-    { label: 'Descargar PDF Gestion de Alquileres', href: '/pdf/presupuesto-alquileres-it360.pdf' }
+    { label: 'Descargar PDF Gestion de Alquileres', href: '/pdf/gestion-alquileres-it360.pdf' }
   ],
   expensas: [
-    { label: 'Descargar PDF Sistema de Expensas', href: '/pdf/propuesta-expensas-it360.pdf' }
+    { label: 'Descargar PDF Gestion de Consorcios', href: '/pdf/gestion-consorcios-it360.pdf' }
   ],
   portal: [
-    { label: 'Descargar PDF Web Inmobiliaria', href: '/pdf/propuesta-web-inmobiliaria-it360.pdf' },
-    { label: 'Descargar PDF Gestion de Alquileres', href: '/pdf/presupuesto-alquileres-it360.pdf' },
-    { label: 'Descargar PDF Sistema de Expensas', href: '/pdf/propuesta-expensas-it360.pdf' }
+    { label: 'Descargar PDF Market Santa Fe', href: '/pdf/market-santa-fe-inmobiliaria-it360.pdf' }
   ],
   crm: [
-    { label: 'Descargar PDF Web Inmobiliaria', href: '/pdf/propuesta-web-inmobiliaria-it360.pdf' },
-    { label: 'Descargar PDF Sistema de Expensas', href: '/pdf/propuesta-expensas-it360.pdf' }
+    { label: 'Descargar PDF CRM IE', href: '/pdf/crm-inmobiliaria-en-equipo-it360.pdf' }
   ]
 }
 
-const proposalUrl = (type, client = 'Inmobiliaria', slide = 'cover') =>
-  `/propuesta/${type}/${encodeURIComponent(client)}?slide=${slide}`
+const proposalPath = (type, client = 'Inmobiliaria') =>
+  `/propuesta/${type}/${encodeURIComponent(client)}`
+
+const CLIENT_CONTACT_URL = 'https://wa.me/3425089906?text=Hola,%20quiero%20coordinar%20una%20demo%20de%20IT360'
+const SENSITIVE_PROJECT_TITLES = new Set(['CRM Inmobiliario', 'Sistema de Alquileres', 'Sistema de Expensas'])
+
+const webServiceItems = [
+  'Diseno moderno responsive (mobile-first)',
+  'Catalogo de propiedades con fotos, precio y descripcion',
+  'Filtros por tipo: venta, alquiler y temporal',
+  'Filtros por zona, precio, ambientes y superficie',
+  'Pagina de detalle individual por propiedad',
+  'Carga de imagenes multiples por propiedad',
+  'Formulario de contacto por propiedad con WhatsApp',
+  'Mapa de ubicacion integrado por propiedad',
+  'Seccion Nosotros y trayectoria de la inmobiliaria',
+  'Galeria de fotos con visor ampliado',
+  'Configuracion de dominio incluida',
+  'SSL y hosting primer ano'
+]
+
+const webBenefits = [
+  { value: '24/7', title: 'Propiedades online', text: 'Tu catalogo queda disponible todo el dia para que tus clientes consulten cuando quieran.' },
+  { value: 'Imagen', title: 'Imagen profesional', text: 'Diseno a medida que refleja la seriedad y trayectoria de tu inmobiliaria.' },
+  { value: '$0', title: 'Sin intermediarios', text: 'Tu propia web con tu marca, tu dominio y tus propiedades.' },
+  { value: '100%', title: 'Presencia propia', text: 'Una web profesional que transmite confianza desde el primer contacto.' },
+  { value: 'Escala', title: 'Escalabilidad', text: 'La plataforma crece con tu cartera, mas zonas y mas operaciones.' },
+  { value: 'SEO', title: 'Visibilidad organica', text: 'Configuracion inicial para aparecer en Google cuando busquen propiedades en tu zona.' }
+]
+
+const webOptionalServices = [
+  {
+    title: 'Automatizacion WhatsApp',
+    text: 'Respuestas automaticas, catalogo por chat y notificaciones de consultas via WhatsApp Business.'
+  },
+  {
+    title: 'Publicidad Meta Ads',
+    text: 'Gestion de campanas en Instagram y Facebook para captar propietarios e inquilinos.'
+  },
+  {
+    title: 'Integracion con portales',
+    text: 'Publicacion automatica en ZonaProp, ArgenProp, MercadoLibre y otros portales.'
+  },
+  {
+    title: 'SEO Avanzado',
+    text: 'Estrategia de posicionamiento organico para que encuentren tus propiedades en Google.'
+  }
+]
+
+const webMaintenanceItems = [
+  'Actualizacion de propiedades y precios',
+  'Carga de propiedades nuevas hasta 15 por mes',
+  'Cambios de diseno y contenido',
+  'Seguridad y backups semanales',
+  'Soporte tecnico prioritario por WhatsApp',
+  'Optimizacion continua de velocidad y SEO'
+]
 
 const FloatingMenu = () => {
   const location = useLocation()
   const navigate = useNavigate()
   const { client } = useParams()
   const clientName = client ? decodeURIComponent(client) : 'Inmobiliaria'
+  const params = new URLSearchParams(location.search)
+  const clientMode = params.get('modo') === 'cliente'
+  const modeSearch = clientMode ? '?modo=cliente' : ''
 
   const menuItems = [
-    { label: 'Presentacion', icon: '💼', onClick: () => navigate('/') },
-    { label: 'IT360', icon: '🧩', onClick: () => navigate('/it360') },
-    { label: 'Portal', icon: '🏠', onClick: () => navigate(proposalUrl('portal', clientName)) },
-    { label: 'CRM', icon: '📊', onClick: () => navigate(proposalUrl('crm', clientName)) },
-    { label: 'Alquileres', icon: '🔑', onClick: () => navigate(proposalUrl('alquileres', clientName)) },
-    { label: 'Expensas', icon: '🏢', onClick: () => navigate(proposalUrl('expensas', clientName)) }
+    { label: 'Presentacion', icon: '💼', onClick: () => navigate({ pathname: '/', search: modeSearch }) },
+    { label: 'IT360', icon: '🧩', onClick: () => navigate({ pathname: '/it360', search: modeSearch }) },
+    { label: 'Portal', icon: '🏠', onClick: () => navigate({ pathname: proposalPath('portal', clientName), search: modeSearch }) },
+    { label: 'CRM', icon: '📊', onClick: () => navigate({ pathname: proposalPath('crm', clientName), search: modeSearch }) },
+    { label: 'Alquileres', icon: '🔑', onClick: () => navigate({ pathname: proposalPath('alquileres', clientName), search: modeSearch }) },
+    { label: 'Expensas', icon: '🏢', onClick: () => navigate({ pathname: proposalPath('expensas', clientName), search: modeSearch }) }
   ]
 
   const isActive = (label) => {
@@ -162,7 +217,7 @@ const FloatingMenu = () => {
           </button>
         ))}
         <button
-          onClick={() => navigate(proposalUrl('portal', clientName, 'projects'))}
+          onClick={() => navigate({ pathname: proposalPath('portal', clientName), search: `${modeSearch ? `${modeSearch}&` : '?'}slide=projects` })}
           className={`flex items-center gap-2 rounded-xl px-4 py-2 transition ${
             location.pathname.startsWith('/propuesta/portal/')
               ? 'bg-white text-black'
@@ -186,6 +241,9 @@ const ProposalDetail = () => {
 
   const proposal = proposals[type] || proposals.web
   const isPortalProposal = type === 'portal'
+  const isWebProposal = type === 'web'
+  const params = new URLSearchParams(location.search)
+  const clientMode = params.get('modo') === 'cliente'
   const pdfDownloads = pdfLibrary[type] || pdfLibrary.web
 
   useEffect(() => {
@@ -214,6 +272,70 @@ const ProposalDetail = () => {
   }, [currentSlide])
 
   const renderInvestment = () => {
+    if (clientMode) {
+      return (
+        <div className="py-8">
+          <h2 className="mb-4 text-center text-4xl font-bold text-white">Propuesta economica</h2>
+          <p className="mb-8 text-center text-xl text-slate-400">
+            La inversion final se presenta en reunion, junto con la demo y el alcance ajustado a tu inmobiliaria.
+          </p>
+          <div className="mx-auto max-w-3xl rounded-3xl border border-amber-500/30 bg-amber-500/10 p-8 text-center">
+            <p className="text-sm uppercase tracking-[0.25em] text-amber-300">Modo cliente</p>
+            <p className="mt-4 text-3xl font-bold text-white">Valores reservados para la presentacion comercial</p>
+            <p className="mt-4 text-slate-300">
+              Si queres, coordinamos una llamada y te mostramos costos, tiempos y opciones segun tu caso.
+            </p>
+            <a
+              href={CLIENT_CONTACT_URL}
+              className="mt-8 inline-flex rounded-2xl bg-green-600 px-6 py-4 text-xl font-bold text-white transition hover:bg-green-700"
+            >
+              Coordinar reunion
+            </a>
+          </div>
+        </div>
+      )
+    }
+
+    if (isWebProposal) {
+      return (
+        <div className="py-8">
+          <h2 className="mb-4 text-center text-4xl font-bold text-white">Tu inversion</h2>
+          <p className="mb-8 text-center text-xl text-slate-400">
+            Precio final, trabajo completamente terminado y entregado.
+          </p>
+          <div className="mx-auto max-w-4xl rounded-3xl border border-blue-500/30 bg-slate-800 p-8 shadow-lg shadow-blue-500/10">
+            <p className="text-sm uppercase tracking-[0.25em] text-blue-300">Pagina Web Inmobiliaria</p>
+            <p className="mt-6 text-6xl font-bold text-white md:text-7xl">{proposal.price}</p>
+            <p className="mt-3 text-lg text-slate-300">Precio final en pesos argentinos, sin costos ocultos.</p>
+            <div className="mt-8 grid gap-4 md:grid-cols-3">
+              <div className="rounded-2xl border border-slate-700 bg-slate-900 p-5">
+                <p className="text-sm uppercase tracking-[0.2em] text-slate-500">Inicio de obra</p>
+                <p className="mt-3 text-2xl font-bold text-white">Al pago del anticipo</p>
+              </div>
+              <div className="rounded-2xl border border-slate-700 bg-slate-900 p-5">
+                <p className="text-sm uppercase tracking-[0.2em] text-slate-500">Plazo</p>
+                <p className="mt-3 text-2xl font-bold text-white">20-30 dias habiles</p>
+              </div>
+              <div className="rounded-2xl border border-slate-700 bg-slate-900 p-5">
+                <p className="text-sm uppercase tracking-[0.2em] text-slate-500">Validez</p>
+                <p className="mt-3 text-2xl font-bold text-white">15 dias corridos</p>
+              </div>
+            </div>
+            <div className="mt-6 grid gap-4 md:grid-cols-2">
+              <div className="rounded-2xl border border-blue-500/30 bg-blue-500/10 p-6">
+                <p className="text-sm uppercase tracking-[0.2em] text-blue-300">Anticipo 50%</p>
+                <p className="mt-3 text-4xl font-bold text-white">$179.500</p>
+              </div>
+              <div className="rounded-2xl border border-slate-700 bg-slate-900 p-6">
+                <p className="text-sm uppercase tracking-[0.2em] text-slate-400">Contra entrega 50%</p>
+                <p className="mt-3 text-4xl font-bold text-white">$179.500</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )
+    }
+
     if (type === 'portal') {
       return (
         <div className="py-8">
@@ -268,6 +390,64 @@ const ProposalDetail = () => {
   }
 
   const renderMaintenance = () => {
+    if (clientMode) {
+      return (
+        <div className="py-8">
+          <h2 className="mb-8 text-center text-4xl font-bold text-white">Implementacion y acompanamiento</h2>
+          <div className="mx-auto max-w-4xl rounded-3xl border border-slate-700 bg-slate-800 p-8">
+            <p className="text-center text-xl text-slate-300">
+              El servicio incluye acompanamiento comercial, soporte tecnico y una puesta en marcha guiada segun el producto elegido.
+            </p>
+            <div className="mt-8 grid gap-4 md:grid-cols-2">
+              {['Demo guiada', 'Alcance definido segun necesidad', 'Puesta en marcha coordinada', 'Soporte y seguimiento comercial'].map((item) => (
+                <div key={item} className="rounded-2xl border border-slate-700 bg-slate-900 p-5 text-lg text-white">
+                  {item}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )
+    }
+
+    if (isWebProposal) {
+      return (
+        <div className="py-8">
+          <div className="mb-10">
+            <h2 className="mb-4 text-center text-4xl font-bold text-white">Crece con tu negocio</h2>
+            <p className="text-center text-xl text-slate-400">
+              Servicios opcionales para cuando tu inmobiliaria este lista para el siguiente paso.
+            </p>
+            <div className="mt-8 grid gap-4 md:grid-cols-2">
+              {webOptionalServices.map((item) => (
+                <div key={item.title} className="rounded-2xl border border-slate-700 bg-slate-800 p-6">
+                  <p className="text-2xl font-bold text-white">{item.title}</p>
+                  <p className="mt-3 text-slate-300">{item.text}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="rounded-3xl border border-slate-700 bg-slate-800 p-8">
+            <div className="mb-8">
+              <p className="text-sm uppercase tracking-[0.25em] text-slate-400">Abono de mantenimiento mensual</p>
+              <p className="mt-3 text-5xl font-bold text-white">$59.000 /mes</p>
+              <p className="mt-3 max-w-3xl text-lg text-slate-300">
+                Despreocupate de la parte tecnica. Nosotros nos encargamos de mantener la plataforma actualizada, segura y lista para vender.
+              </p>
+            </div>
+            <div className="grid gap-4 md:grid-cols-2">
+              {webMaintenanceItems.map((item) => (
+                <div key={item} className="rounded-2xl border border-slate-700 bg-slate-900 p-5 text-lg text-white">
+                  {item}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )
+    }
+
     if (type === 'portal') {
       return (
         <div className="py-8">
@@ -328,6 +508,51 @@ const ProposalDetail = () => {
   const renderSlide = () => {
     switch (slides[currentSlide]) {
       case 'cover':
+        if (isWebProposal) {
+          return (
+            <div className="flex h-full flex-col justify-center py-10">
+              <div className="mx-auto max-w-5xl rounded-[2rem] border border-slate-700 bg-slate-900/80 p-8 md:p-10">
+                <p className="text-sm uppercase tracking-[0.35em] text-slate-400">IT360 Soluciones</p>
+                <p className="mt-3 text-sm uppercase tracking-[0.35em] text-slate-500">Propuesta de desarrollo</p>
+                <p className="mt-1 text-sm uppercase tracking-[0.35em] text-slate-500">Propuesta comercial</p>
+                <div className="mt-8 grid gap-8 lg:grid-cols-[1.2fr_0.8fr]">
+                  <div>
+                    <div className="mb-6 flex h-24 w-24 items-center justify-center rounded-3xl bg-gradient-to-br from-pink-500 to-rose-500 shadow-lg">
+                      <span className="text-5xl">{proposal.icon}</span>
+                    </div>
+                    <h1 className="text-5xl font-bold text-white md:text-6xl">Pagina Web</h1>
+                    <p className="mt-2 text-2xl text-slate-200">Inmobiliaria Profesional</p>
+                    <p className="mt-6 max-w-2xl text-xl text-slate-300">
+                      Mostra tus propiedades en venta y alquiler con diseno profesional y presencia online.
+                    </p>
+                  </div>
+                  <div className="rounded-3xl border border-slate-700 bg-slate-800 p-6">
+                    <p className="text-sm uppercase tracking-[0.25em] text-slate-400">Preparado para</p>
+                    <p className="mt-4 text-3xl font-bold text-white">{clientName}</p>
+                    <p className="mt-1 text-xl text-slate-300">Inmobiliaria</p>
+                    <div className="mt-8 space-y-4 border-t border-slate-700 pt-6 text-slate-300">
+                      <div>
+                        <p className="text-sm uppercase tracking-[0.2em] text-slate-500">Fecha de emision</p>
+                        <p className="mt-1 text-lg font-semibold text-white">Marzo 2026</p>
+                      </div>
+                      <div>
+                        <p className="text-sm uppercase tracking-[0.2em] text-slate-500">Validez</p>
+                        <p className="mt-1 text-lg font-semibold text-white">15 dias corridos</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-8 flex flex-wrap items-center gap-4 text-sm text-slate-400">
+                  <span>IT360 Soluciones</span>
+                  <span>Desarrollo Web Apps Automatizacion</span>
+                  <span>Santa Fe, Argentina</span>
+                  <span>www.it360.com.ar</span>
+                </div>
+              </div>
+            </div>
+          )
+        }
+
         return (
           <div className="flex h-full flex-col items-center justify-center py-12 text-center">
             <div className="mb-8 flex h-32 w-32 items-center justify-center rounded-3xl border border-slate-700 bg-gradient-to-br from-slate-800 to-slate-900 shadow-2xl">
@@ -368,6 +593,38 @@ const ProposalDetail = () => {
         )
 
       case 'it360':
+        if (isWebProposal) {
+          return (
+            <div className="py-8">
+              <h2 className="mb-8 text-center text-4xl font-bold text-white">Quienes somos</h2>
+              <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+                <div className="rounded-3xl border border-slate-700 bg-slate-800 p-8">
+                  <p className="text-sm uppercase tracking-[0.25em] text-slate-400">Sobre IT360</p>
+                  <h3 className="mt-4 text-3xl font-bold text-white">Desarrollamos sistemas pensados para escalar negocios</h3>
+                  <p className="mt-4 text-lg text-slate-300">
+                    En IT360 Soluciones desarrollamos sistemas y plataformas digitales pensadas para escalar negocios,
+                    automatizar procesos y generar resultados reales. Trabajamos con empresas y emprendedores de Santa Fe
+                    y la region, creando soluciones modernas, seguras y adaptadas a cada necesidad.
+                  </p>
+                </div>
+                <div className="grid gap-4 sm:grid-cols-2">
+                  {[
+                    ['Diseno profesional', 'Interfaces modernas, limpias y orientadas a la conversion y experiencia del usuario.'],
+                    ['Sitios inmobiliarios', 'Paginas web especializadas para mostrar propiedades con diseno atractivo y funcional.'],
+                    ['Automatizacion', 'Flujos de trabajo inteligentes que ahorran tiempo y reducen la intervencion manual.'],
+                    ['Escalabilidad futura', 'Arquitectura disenada para crecer con mas propiedades y nuevas funcionalidades.']
+                  ].map(([title, text]) => (
+                    <div key={title} className="rounded-2xl border border-slate-700 bg-slate-900 p-5">
+                      <p className="text-xl font-bold text-white">{title}</p>
+                      <p className="mt-3 text-slate-300">{text}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )
+        }
+
         return (
           <div className="py-8">
             <h2 className="mb-8 text-center text-4xl font-bold text-white">Primero: presentacion de IT360</h2>
@@ -408,6 +665,50 @@ const ProposalDetail = () => {
         )
 
       case 'projects':
+        if (isWebProposal) {
+          return (
+            <div className="py-8">
+              <h2 className="mb-4 text-center text-4xl font-bold text-white">El servicio</h2>
+              <p className="mb-8 text-center text-xl text-slate-400">
+                Desarrollo de una pagina web profesional para mostrar propiedades, captar consultas y fortalecer la presencia online.
+              </p>
+              <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+                <div className="rounded-3xl border border-slate-700 bg-slate-800 p-8">
+                  <p className="text-sm uppercase tracking-[0.25em] text-slate-400">Que vas a recibir</p>
+                  <h3 className="mt-4 text-3xl font-bold text-white">Una web completa para vender y alquilar mejor</h3>
+                  <p className="mt-4 text-lg text-slate-300">
+                    Una pagina web inmobiliaria completa, con diseno personalizado para tu marca, catalogo de propiedades
+                    con filtros inteligentes, fichas individuales, galeria de fotos, mapa de ubicacion y formulario de contacto con WhatsApp.
+                  </p>
+                  <div className="mt-8 grid gap-3 md:grid-cols-2">
+                    {webServiceItems.map((item) => (
+                      <div key={item} className="rounded-2xl border border-slate-700 bg-slate-900 px-4 py-4 text-slate-200">
+                        {item}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="rounded-3xl border border-slate-700 bg-slate-900 p-8">
+                  <p className="text-sm uppercase tracking-[0.25em] text-slate-400">Ejemplo real de nuestro trabajo</p>
+                  <h3 className="mt-4 text-3xl font-bold text-white">citytek.com.ar</h3>
+                  <p className="mt-4 text-lg text-slate-300">
+                    Recorre ese sitio para ver la calidad de desarrollo, diseno y funcionalidad que vas a recibir en tu proyecto.
+                  </p>
+                  <a
+                    href="https://citytek.com.ar"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-8 inline-flex rounded-2xl bg-blue-500 px-6 py-4 text-xl font-bold text-white transition hover:bg-blue-400"
+                  >
+                    Visitar sitio
+                  </a>
+                </div>
+              </div>
+            </div>
+          )
+        }
+
         if (isPortalProposal) {
           return (
             <div className="py-8">
@@ -461,24 +762,52 @@ const ProposalDetail = () => {
               Mostra trabajos activos y referencias reales antes de hablar de funcionalidades y presupuesto.
             </p>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-              {currentProjects.map((project) => (
-                <a
-                  key={project.title}
-                  href={project.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="rounded-2xl border border-slate-700 bg-slate-800 p-5 transition hover:border-blue-500"
-                >
-                  <span className="text-3xl">{project.icon}</span>
-                  <p className="mt-2 font-bold text-white">{project.title}</p>
-                  <p className="mt-2 text-slate-400">{project.description}</p>
-                </a>
-              ))}
+              {currentProjects.map((project) => {
+                const isSensitiveProject = clientMode && SENSITIVE_PROJECT_TITLES.has(project.title)
+                const href = isSensitiveProject ? CLIENT_CONTACT_URL : project.url
+
+                return (
+                  <a
+                    key={project.title}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="rounded-2xl border border-slate-700 bg-slate-800 p-5 transition hover:border-blue-500"
+                  >
+                    <span className="text-3xl">{project.icon}</span>
+                    <p className="mt-2 font-bold text-white">{project.title}</p>
+                    <p className="mt-2 text-slate-400">{project.description}</p>
+                    {isSensitiveProject && (
+                      <p className="mt-3 text-sm font-semibold text-blue-400">Coordinar demo →</p>
+                    )}
+                  </a>
+                )
+              })}
             </div>
           </div>
         )
 
       case 'features':
+        if (isWebProposal) {
+          return (
+            <div className="py-8">
+              <h2 className="mb-4 text-center text-4xl font-bold text-white">Por que vale la inversion</h2>
+              <p className="mb-8 text-center text-xl text-slate-400">
+                Lo que tu inmobiliaria gana con este desarrollo desde el dia uno.
+              </p>
+              <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+                {webBenefits.map((item) => (
+                  <div key={item.title} className="rounded-3xl border border-slate-700 bg-slate-800 p-6">
+                    <p className="text-3xl font-bold text-blue-400">{item.value}</p>
+                    <p className="mt-4 text-2xl font-bold text-white">{item.title}</p>
+                    <p className="mt-3 text-slate-300">{item.text}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )
+        }
+
         return (
           <div className="py-8">
             <h2 className="mb-8 text-center text-4xl font-bold text-white">
@@ -505,6 +834,37 @@ const ProposalDetail = () => {
         return renderMaintenance()
 
       case 'contact':
+        if (isWebProposal) {
+          return (
+            <div className="py-8">
+              <div className="mx-auto max-w-5xl rounded-3xl border border-slate-700 bg-slate-800 p-8">
+                <h2 className="text-center text-4xl font-bold text-white">Condiciones de esta propuesta IT360</h2>
+                <div className="mt-8 grid gap-4 md:grid-cols-2">
+                  {[
+                    'Validez: 15 dias corridos desde emision',
+                    'Los precios se expresan en pesos argentinos (ARS)',
+                    'No incluye hosting post primer ano',
+                    'No incluye abono de mantenimiento mensual',
+                    'Se entrega la pagina web completa y funcionando',
+                    `Propuesta preparada exclusivamente para ${clientName} - Inmobiliaria`
+                  ].map((item) => (
+                    <div key={item} className="rounded-2xl border border-slate-700 bg-slate-900 px-5 py-4 text-slate-200">
+                      {item}
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-8 border-t border-slate-700 pt-6 text-center text-slate-400">
+                  <p>IT360 Soluciones · Desarrollo Web · Apps · Automatizacion</p>
+                  <p className="mt-2">Santa Fe, Argentina · www.it360.com.ar</p>
+                  <p className="mt-4 text-sm">
+                    © 2026 IT360 Soluciones. Esta propuesta es confidencial y fue preparada exclusivamente para {clientName}.
+                  </p>
+                </div>
+              </div>
+            </div>
+          )
+        }
+
         return (
           <div className="py-8">
             <div className="mb-8 rounded-2xl border border-blue-500/30 bg-blue-500/10 p-6">
@@ -549,7 +909,7 @@ const ProposalDetail = () => {
 
       <div className="flex min-h-screen justify-center px-8 pb-8 pt-28">
         <div className="w-full max-w-5xl">
-          <button onClick={() => navigate('/')} className="mb-6 flex items-center gap-2 text-xl text-slate-400 hover:text-white">
+          <button onClick={() => navigate({ pathname: '/', search: clientMode ? '?modo=cliente' : '' })} className="mb-6 flex items-center gap-2 text-xl text-slate-400 hover:text-white">
             ← Volver
           </button>
 

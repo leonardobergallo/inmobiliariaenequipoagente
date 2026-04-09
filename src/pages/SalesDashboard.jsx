@@ -1,18 +1,19 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 const products = [
   {
-    id: 'web',
-    sectionId: 'proyecto-web',
-    icon: '🌐',
-    name: 'Pagina Web',
-    desc: 'Web profesional con propiedades y contacto directo.',
-    summary: 'Ideal para inmobiliarias que quieren presencia online propia, consultas directas y una vidriera con su marca.',
-    price: '$299.000',
-    priceMonth: '$15.000/mes',
-    details: ['Diseno profesional', 'Propiedades y contacto directo', 'Responsive y listo para tu marca'],
-    color: 'from-blue-400 to-blue-600'
+    id: 'crm',
+    sectionId: 'proyecto-crm',
+    icon: '📋',
+    name: 'CRM Inmobiliario',
+    desc: 'Sistema activo para gestion comercial y seguimiento.',
+    summary: 'Ideal para inmobiliarias que quieren ordenar contactos, hacer seguimiento comercial y centralizar su gestion diaria en un solo lugar.',
+    price: '$359.000',
+    priceMonth: '$59.000 /mensual',
+    details: ['Gestion comercial', 'Seguimiento de clientes', 'Organizacion de propiedades'],
+    color: 'from-blue-400 to-blue-600',
+    popular: true
   },
   {
     id: 'portal',
@@ -28,17 +29,16 @@ const products = [
     externalUrl: 'https://www.marketsantafe.com.ar/inmobiliaria/inmobiliaria-solar'
   },
   {
-    id: 'crm',
-    sectionId: 'proyecto-crm',
-    icon: '📋',
-    name: 'Para Propiedades',
-    desc: 'Publicacion y gestion inmobiliaria con enfoque comercial.',
-    summary: 'Pensado para inmobiliarias que quieren publicar, gestionar mejor y contar con un producto comercial mas completo.',
+    id: 'web',
+    sectionId: 'proyecto-web',
+    icon: '🌐',
+    name: 'Portal Inmobiliario',
+    desc: 'Web profesional con propiedades y contacto directo.',
+    summary: 'Ideal para inmobiliarias que quieren presencia online propia, consultas directas y una vidriera con su marca.',
     price: '$359.000',
-    priceMonth: '$59.000 /mensual',
-    details: ['Hasta 10 propiedades', 'Destacado en busquedas', 'Estadisticas y soporte prioritario'],
-    color: 'from-rose-400 to-pink-500',
-    popular: true
+    priceMonth: '$59.000/mes',
+    details: ['Diseno profesional', 'Catalogo con filtros', 'WhatsApp y contacto directo'],
+    color: 'from-rose-400 to-pink-500'
   },
   {
     id: 'alquileres',
@@ -88,13 +88,13 @@ const currentProjects = [
   {
     title: 'CRM Inmobiliario',
     description: 'Sistema activo para gestion comercial y seguimiento.',
-    url: 'https://crminmobiliaria-neon.vercel.app/demo',
+    url: 'https://crminmobiliaria-9c9xcypfx-marketsantafeoficial-a11ys-projects.vercel.app/demo',
     tag: 'Proyecto vigente'
   },
   {
     title: 'Sistema de Alquileres',
     description: 'Sistema activo para administracion de alquileres.',
-    url: 'https://administracion-alquileres-bigger-n09npjepa.vercel.app/',
+    url: 'https://administracion-alquileres-bigger2-g58w8h4pi-leonardobergallo.vercel.app/dashboard',
     tag: 'Proyecto vigente'
   },
   {
@@ -107,21 +107,34 @@ const currentProjects = [
 
 const pdfDownloads = [
   {
-    title: 'PDF Web Inmobiliaria',
-    description: 'Referencia comercial para pagina web inmobiliaria.',
-    href: '/pdf/propuesta-web-inmobiliaria-it360.pdf'
+    title: 'PDF Portal Inmobiliario',
+    description: 'Referencia comercial para portal inmobiliario.',
+    href: '/pdf/portal-inmobiliario-it360.pdf'
   },
   {
     title: 'PDF Gestion de Alquileres',
     description: 'Referencia comercial para alquileres.',
-    href: '/pdf/presupuesto-alquileres-it360.pdf'
+    href: '/pdf/gestion-alquileres-it360.pdf'
   },
   {
-    title: 'PDF Sistema de Expensas',
+    title: 'PDF Gestion de Consorcios',
     description: 'Referencia comercial para consorcios y expensas.',
-    href: '/pdf/propuesta-expensas-it360.pdf'
+    href: '/pdf/gestion-consorcios-it360.pdf'
+  },
+  {
+    title: 'PDF Market Santa Fe',
+    description: 'Referencia comercial para tienda inmobiliaria en Market Santa Fe.',
+    href: '/pdf/market-santa-fe-inmobiliaria-it360.pdf'
+  },
+  {
+    title: 'PDF CRM IE',
+    description: 'Referencia comercial para CRM Inmobiliario en Equipo.',
+    href: '/pdf/crm-inmobiliaria-en-equipo-it360.pdf'
   }
 ]
+
+const CLIENT_CONTACT_URL = 'https://wa.me/3425089906?text=Hola,%20quiero%20coordinar%20una%20demo%20de%20IT360'
+const SENSITIVE_PROJECT_TITLES = new Set(['CRM Inmobiliario', 'Sistema de Alquileres', 'Sistema de Expensas'])
 
 const scrollToSection = (sectionId) => {
   const element = document.getElementById(sectionId)
@@ -161,11 +174,17 @@ const FloatingMenu = () => {
 
 const SalesDashboard = () => {
   const navigate = useNavigate()
+  const location = useLocation()
   const [clientName, setClientName] = useState('')
   const activeClientName = clientName.trim() || 'Inmobiliaria'
+  const params = new URLSearchParams(location.search)
+  const clientMode = params.get('modo') === 'cliente'
 
   const startProposal = (type) => {
-    navigate(`/propuesta/${type}/${encodeURIComponent(activeClientName)}`)
+    navigate({
+      pathname: `/propuesta/${type}/${encodeURIComponent(activeClientName)}`,
+      search: clientMode ? '?modo=cliente' : ''
+    })
   }
 
   return (
@@ -184,7 +203,9 @@ const SalesDashboard = () => {
                 Presentacion comercial para inmobiliarias
               </h1>
               <p className="mt-4 max-w-3xl text-lg text-slate-300 md:text-2xl">
-                Un solo flujo para vender mejor: referencias reales, proyectos ordenados, precio claro y PDFs al final.
+                {clientMode
+                  ? 'Un solo flujo para vender mejor: referencias reales, proyectos ordenados y una reunion comercial para definir la propuesta final.'
+                  : 'Un solo flujo para vender mejor: referencias reales, proyectos ordenados, precio claro y PDFs al final.'}
               </p>
 
               <div className="mt-8 flex flex-wrap gap-4">
@@ -217,6 +238,11 @@ const SalesDashboard = () => {
               <p className="mt-3 text-sm text-slate-400">
                 Presentacion activa para <span className="font-semibold text-white">{activeClientName}</span>
               </p>
+              {clientMode && (
+                <p className="mt-2 text-sm text-amber-300">
+                  Modo cliente activo: se ocultan precios, demos sensibles y material interno.
+                </p>
+              )}
             </div>
           </div>
         </section>
@@ -233,24 +259,30 @@ const SalesDashboard = () => {
           </div>
 
           <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-            {currentProjects.map((project) => (
-              <a
-                key={project.title}
-                href={project.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group rounded-3xl border border-slate-700 bg-slate-900/70 p-6 transition hover:border-blue-500 hover:bg-slate-900"
-              >
-                <span className="inline-flex rounded-full bg-slate-800 px-3 py-1 text-xs font-medium text-blue-300">
-                  {project.tag}
-                </span>
-                <h3 className="mt-4 text-2xl font-bold text-white">{project.title}</h3>
-                <p className="mt-3 text-slate-400">{project.description}</p>
-                <span className="mt-6 inline-flex text-lg font-semibold text-blue-400 transition group-hover:translate-x-1">
-                  Abrir referencia →
-                </span>
-              </a>
-            ))}
+            {currentProjects.map((project) => {
+              const isSensitiveProject = clientMode && SENSITIVE_PROJECT_TITLES.has(project.title)
+              const href = isSensitiveProject ? CLIENT_CONTACT_URL : project.url
+              const ctaLabel = isSensitiveProject ? 'Coordinar demo →' : 'Abrir referencia →'
+
+              return (
+                <a
+                  key={project.title}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group rounded-3xl border border-slate-700 bg-slate-900/70 p-6 transition hover:border-blue-500 hover:bg-slate-900"
+                >
+                  <span className="inline-flex rounded-full bg-slate-800 px-3 py-1 text-xs font-medium text-blue-300">
+                    {project.tag}
+                  </span>
+                  <h3 className="mt-4 text-2xl font-bold text-white">{project.title}</h3>
+                  <p className="mt-3 text-slate-400">{project.description}</p>
+                  <span className="mt-6 inline-flex text-lg font-semibold text-blue-400 transition group-hover:translate-x-1">
+                    {ctaLabel}
+                  </span>
+                </a>
+              )
+            })}
           </div>
         </section>
 
@@ -280,16 +312,25 @@ const SalesDashboard = () => {
                 </div>
               </div>
 
-              <div className="grid gap-3 sm:grid-cols-2 lg:min-w-[360px]">
-                <div className="rounded-2xl border border-slate-700 bg-slate-900 px-5 py-4">
-                  <p className="text-sm uppercase tracking-[0.2em] text-slate-500">Implementacion</p>
-                  <p className="mt-2 text-3xl font-bold text-white">{product.price}</p>
+              {!clientMode && (
+                <div className="grid gap-3 sm:grid-cols-2 lg:min-w-[360px]">
+                  <div className="rounded-2xl border border-slate-700 bg-slate-900 px-5 py-4">
+                    <p className="text-sm uppercase tracking-[0.2em] text-slate-500">Implementacion</p>
+                    <p className="mt-2 text-3xl font-bold text-white">{product.price}</p>
+                  </div>
+                  <div className="rounded-2xl border border-slate-700 bg-slate-900 px-5 py-4">
+                    <p className="text-sm uppercase tracking-[0.2em] text-slate-500">Mantenimiento</p>
+                    <p className="mt-2 text-3xl font-bold text-white">{product.priceMonth}</p>
+                  </div>
                 </div>
-                <div className="rounded-2xl border border-slate-700 bg-slate-900 px-5 py-4">
-                  <p className="text-sm uppercase tracking-[0.2em] text-slate-500">Mantenimiento</p>
-                  <p className="mt-2 text-3xl font-bold text-white">{product.priceMonth}</p>
+              )}
+              {clientMode && (
+                <div className="rounded-2xl border border-amber-500/30 bg-amber-500/10 px-5 py-4 lg:min-w-[360px]">
+                  <p className="text-sm uppercase tracking-[0.2em] text-amber-300">Propuesta comercial</p>
+                  <p className="mt-2 text-xl font-bold text-white">La inversion se presenta en reunion</p>
+                  <p className="mt-2 text-sm text-slate-300">Te mostramos alcance, demo y valores en una llamada breve.</p>
                 </div>
-              </div>
+              )}
             </div>
 
             <div className="grid gap-4 md:grid-cols-3">
@@ -307,7 +348,7 @@ const SalesDashboard = () => {
               >
                 Ver propuesta
               </button>
-              {product.externalUrl && (
+              {product.externalUrl && !clientMode && (
                 <a
                   href={product.externalUrl}
                   target="_blank"
@@ -327,7 +368,9 @@ const SalesDashboard = () => {
               <p className="text-sm uppercase tracking-[0.25em] text-slate-400">Final</p>
               <h2 className="mt-2 text-3xl font-bold text-white md:text-4xl">PDFs y cierre</h2>
               <p className="mt-4 max-w-2xl text-lg text-slate-300">
-                Cuando terminaste de mostrar los proyectos, aca quedan los PDFs para que {activeClientName} pueda revisar la informacion con tranquilidad.
+                {clientMode
+                  ? `Cuando termines de revisar la presentacion, coordinamos una reunion para mostrarte la demo completa de ${activeClientName}.`
+                  : `Cuando terminaste de mostrar los proyectos, aca quedan los PDFs para que ${activeClientName} pueda revisar la informacion con tranquilidad.`}
               </p>
               <div className="mt-8 flex flex-wrap gap-4">
                 <a
@@ -348,23 +391,42 @@ const SalesDashboard = () => {
             </div>
 
             <div className="rounded-3xl border border-slate-700 bg-slate-900/80 p-6">
-              <p className="text-sm uppercase tracking-[0.2em] text-slate-400">Material para analizar</p>
-              <div className="mt-5 space-y-4">
-                {pdfDownloads.map((pdf) => (
+              {!clientMode && (
+                <>
+                  <p className="text-sm uppercase tracking-[0.2em] text-slate-400">Material para analizar</p>
+                  <div className="mt-5 space-y-4">
+                    {pdfDownloads.map((pdf) => (
+                      <a
+                        key={pdf.href}
+                        href={pdf.href}
+                        download
+                        className="block rounded-2xl border border-slate-700 bg-slate-800 px-5 py-5 transition hover:border-blue-500 hover:bg-slate-700"
+                      >
+                        <p className="text-lg font-bold text-white">{pdf.title}</p>
+                        <p className="mt-2 text-sm text-slate-400">{pdf.description}</p>
+                        <span className="mt-4 inline-flex text-sm font-semibold text-blue-400">
+                          Descargar PDF →
+                        </span>
+                      </a>
+                    ))}
+                  </div>
+                </>
+              )}
+              {clientMode && (
+                <>
+                  <p className="text-sm uppercase tracking-[0.2em] text-slate-400">Siguiente paso</p>
+                  <p className="mt-4 text-2xl font-bold text-white">Coordinemos una reunion comercial</p>
+                  <p className="mt-3 text-slate-300">
+                    Te mostramos demos, alcance y propuesta economica en una llamada breve segun la necesidad de tu inmobiliaria.
+                  </p>
                   <a
-                    key={pdf.href}
-                    href={pdf.href}
-                    download
-                    className="block rounded-2xl border border-slate-700 bg-slate-800 px-5 py-5 transition hover:border-blue-500 hover:bg-slate-700"
+                    href={CLIENT_CONTACT_URL}
+                    className="mt-6 inline-flex rounded-2xl bg-green-500 px-6 py-4 text-lg font-bold text-white transition hover:bg-green-600"
                   >
-                    <p className="text-lg font-bold text-white">{pdf.title}</p>
-                    <p className="mt-2 text-sm text-slate-400">{pdf.description}</p>
-                    <span className="mt-4 inline-flex text-sm font-semibold text-blue-400">
-                      Descargar PDF →
-                    </span>
+                    Coordinar reunion
                   </a>
-                ))}
-              </div>
+                </>
+              )}
             </div>
           </div>
 

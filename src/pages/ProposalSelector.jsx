@@ -1,16 +1,16 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 const proposals = [
   {
     id: 'web',
     title: 'Pagina Web Inmobiliaria',
-    subtitle: 'Diseño profesional y presencia online',
+    subtitle: 'Profesional, con catalogo, filtros y WhatsApp',
     icon: '🌐',
     bgGradient: 'from-blue-400 via-blue-500 to-cyan-500',
-    price: '$299.000',
-    priceMonth: '$15.000/mes',
-    weeks: 2
+    price: '$359.000',
+    priceMonth: '$59.000/mes',
+    weeks: 4
   },
   {
     id: 'portal',
@@ -56,7 +56,10 @@ const proposals = [
 
 const ProposalSelector = () => {
   const navigate = useNavigate()
+  const location = useLocation()
   const [clientName, setClientName] = useState('Inmobiliaria')
+  const params = new URLSearchParams(location.search)
+  const clientMode = params.get('modo') === 'cliente'
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 p-4 md:p-8">
@@ -67,7 +70,9 @@ const ProposalSelector = () => {
             <span className="text-sm font-medium text-gray-600">IT360 Soluciones</span>
           </div>
           <h1 className="mb-3 text-4xl font-bold text-gray-900 md:text-5xl">Propuestas Comerciales</h1>
-          <p className="text-xl text-gray-500">Seleccioná una propuesta para presentar</p>
+          <p className="text-xl text-gray-500">
+            {clientMode ? 'Selecciona una propuesta para compartir sin valores visibles' : 'Seleccioná una propuesta para presentar'}
+          </p>
         </div>
 
         <div className="mb-8 rounded-2xl bg-white p-6 shadow-lg">
@@ -85,7 +90,10 @@ const ProposalSelector = () => {
           {proposals.map((proposal) => (
             <div
               key={proposal.id}
-              onClick={() => navigate(`/propuesta/${proposal.id}/${encodeURIComponent(clientName)}`)}
+              onClick={() => navigate({
+                pathname: `/propuesta/${proposal.id}/${encodeURIComponent(clientName)}`,
+                search: clientMode ? '?modo=cliente' : ''
+              })}
               className="group cursor-pointer overflow-hidden rounded-2xl bg-white shadow-lg transition-all hover:shadow-2xl"
             >
               <div className={`h-2 bg-gradient-to-r ${proposal.bgGradient}`}></div>
@@ -101,10 +109,18 @@ const ProposalSelector = () => {
                 </div>
 
                 <div className="mt-6 flex items-end justify-between">
-                  <div>
-                    <p className="text-3xl font-bold text-gray-900">{proposal.price}</p>
-                    <p className="text-base text-gray-500">{proposal.priceMonth}</p>
-                  </div>
+                  {!clientMode && (
+                    <div>
+                      <p className="text-3xl font-bold text-gray-900">{proposal.price}</p>
+                      <p className="text-base text-gray-500">{proposal.priceMonth}</p>
+                    </div>
+                  )}
+                  {clientMode && (
+                    <div>
+                      <p className="text-lg font-bold text-gray-900">Valores en reunion comercial</p>
+                      <p className="text-base text-gray-500">Demo y alcance segun necesidad</p>
+                    </div>
+                  )}
                   <span className="rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-600">
                     ⏱️ {proposal.weeks} semanas
                   </span>
