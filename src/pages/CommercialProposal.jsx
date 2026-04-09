@@ -224,7 +224,7 @@ const CommercialProposal = () => {
             <p className="font-medium">Firmamos y arrancamos</p>
           </div>
           <div className="mt-6 p-4 bg-yellow-50 rounded-lg border-2 border-yellow-400">
-            <p className="text-center font-bold text-yellow-700">🎁 Oferta especial: 30% descuento si contratas hoy</p>
+            <p className="text-center font-bold text-yellow-700">Listo para avanzar cuando lo decidan</p>
           </div>
         </div>
       ),

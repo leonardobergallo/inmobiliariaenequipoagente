@@ -11,6 +11,7 @@ html {
   height: auto;
   overflow-x: hidden;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 body {
@@ -27,11 +28,14 @@ body {
   min-height: 100dvh;
   min-height: -webkit-fill-available;
   height: auto;
+  overscroll-behavior-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 #root {
   min-height: 100vh;
   min-height: 100dvh;
+  overflow: visible;
 }
 
 /* Safe area para dispositivos con notch - ya esta en index.html */

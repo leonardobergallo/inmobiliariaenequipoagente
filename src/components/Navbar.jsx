@@ -7,8 +7,8 @@ const Navbar = () => {
   const isActive = (path) => location.pathname === path
 
   const navItems = [
-    { path: '/it360', icon: 'apps', label: 'Software' },
-    { path: '/propuestas', icon: 'description', label: 'Propuestas' },
+    { path: '/', icon: 'dashboard', label: 'Inicio' },
+    { path: '/it360', icon: 'apps', label: 'IT360' },
     { path: '/portal', icon: 'home', label: 'Portal' },
     { path: '/crm', icon: 'group', label: 'CRM' },
     { path: '/rentals', icon: 'key', label: 'Alquileres' },
@@ -65,4 +65,3 @@ const Navbar = () => {
 }
 
 export default Navbar
-

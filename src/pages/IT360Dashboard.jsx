@@ -29,14 +29,14 @@ const currentProjects = [
     title: 'CRM Inmobiliario',
     description: 'Sistema activo de gestion comercial',
     icon: '🏢',
-    url: 'https://crminmobiliaria-neon.vercel.app/demo',
+    url: 'https://crminmobiliaria-9c9xcypfx-marketsantafeoficial-a11ys-projects.vercel.app/demo',
     color: 'from-green-500 to-green-700'
   },
   {
     title: 'Sistema de Alquileres',
     description: 'Sistema activo para administracion de alquileres',
     icon: '🔑',
-    url: 'https://administracion-alquileres-bigger-n09npjepa.vercel.app/',
+    url: 'https://administracion-alquileres-bigger2-g58w8h4pi-leonardobergallo.vercel.app/dashboard',
     color: 'from-amber-500 to-yellow-600'
   },
   {
