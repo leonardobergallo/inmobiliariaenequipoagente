@@ -9,7 +9,7 @@ const products = [
     name: 'CRM Inmobiliario',
     desc: 'Sistema activo para gestion comercial y seguimiento.',
     summary: 'Ideal para inmobiliarias que quieren ordenar contactos, hacer seguimiento comercial y centralizar su gestion diaria en un solo lugar.',
-    price: '$359.000',
+    price: '$299.999',
     priceMonth: '$59.000 /mensual',
     details: ['Gestion comercial', 'Seguimiento de clientes', 'Organizacion de propiedades'],
     color: 'from-blue-400 to-blue-600',
@@ -59,8 +59,8 @@ const products = [
     name: 'Sistema de Expensas',
     desc: 'Administracion profesional de consorcios.',
     summary: 'La alternativa para consorcios y edificios que necesitan liquidaciones, reportes y administracion centralizada.',
-    price: '$599.000',
-    priceMonth: '$35.000/mes',
+    price: '$499.999',
+    priceMonth: '$69.999/mes',
     details: ['Liquidaciones y deudas', 'Portal propietarios', 'Reportes y administracion'],
     color: 'from-emerald-400 to-teal-500'
   }

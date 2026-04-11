@@ -141,7 +141,7 @@ const steps = [
           <li>Destacado en busquedas</li>
           <li>Estadisticas y soporte prioritario</li>
         </ul>
-        <div className="text-sm font-semibold">Implementacion: $359.000</div>
+        <div className="text-sm font-semibold">Implementacion: $299.999</div>
         <div className="text-sm">Mantenimiento: $59.000/mes</div>
         <button className="mt-3 rounded bg-primary px-3 py-2 text-sm text-white">Ver propuesta -&gt;</button>
       </div>
@@ -175,8 +175,8 @@ const steps = [
           <li>Portal propietarios</li>
           <li>Reportes y administracion</li>
         </ul>
-        <div className="text-sm font-semibold">Implementacion: $599.000</div>
-        <div className="text-sm">Mantenimiento: $35.000/mes</div>
+        <div className="text-sm font-semibold">Implementacion: $499.999</div>
+        <div className="text-sm">Mantenimiento: $69.999/mes</div>
         <button className="mt-3 rounded bg-primary px-3 py-2 text-sm text-white">Ver propuesta -&gt;</button>
       </div>
     )
@@ -198,7 +198,7 @@ const steps = [
           </div>
           <div className="rounded-xl border border-gray-200 p-3 dark:border-gray-700">
             <div className="font-semibold">Para Propiedades</div>
-            <div>Implementacion $359.000 · Mantenimiento $59.000/mes</div>
+            <div>Implementacion $299.999 · Mantenimiento $59.000/mes</div>
           </div>
           <div className="rounded-xl border border-gray-200 p-3 dark:border-gray-700">
             <div className="font-semibold">Gestion de Alquileres</div>
@@ -206,7 +206,7 @@ const steps = [
           </div>
           <div className="rounded-xl border border-gray-200 p-3 dark:border-gray-700">
             <div className="font-semibold">Sistema de Expensas</div>
-            <div>Implementacion $599.000 · Mantenimiento $35.000/mes</div>
+            <div>Implementacion $499.999 · Mantenimiento $69.999/mes</div>
           </div>
         </div>
       </div>

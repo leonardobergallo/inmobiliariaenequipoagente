@@ -21,15 +21,15 @@ const proposals = {
   expensas: {
     title: 'Sistema de Expensas',
     icon: '🏢',
-    price: '$599.000',
-    priceMonth: '$35.000/mes',
+    price: '$499.999',
+    priceMonth: '$69.999/mes',
     bgGradient: 'from-purple-500 to-violet-500',
     features: ['Multiples edificios', 'Liquidaciones', 'Portal propietarios', 'Control deudas', 'Reportes PDF']
   },
   crm: {
     title: 'Para Propiedades',
     icon: '📋',
-    price: '$359.000',
+    price: '$299.999',
     priceMonth: '$59.000 /mensual',
     bgGradient: 'from-rose-500 to-pink-500',
     features: ['Hasta 10 propiedades', 'Destacado en búsquedas', 'Estadísticas detalladas', 'Soporte prioritario', 'MercadoPago', 'Transferencia']
@@ -104,9 +104,6 @@ const pdfLibrary = {
   ],
   expensas: [
     { label: 'Descargar PDF Gestion de Consorcios', href: '/pdf/gestion-consorcios-it360.pdf' }
-  ],
-  portal: [
-    { label: 'Descargar PDF Market Santa Fe', href: '/pdf/market-santa-fe-inmobiliaria-it360.pdf' }
   ],
   crm: [
     { label: 'Descargar PDF CRM IE', href: '/pdf/crm-inmobiliaria-en-equipo-it360.pdf' }
@@ -361,7 +358,7 @@ const ProposalDetail = () => {
           <div className="mx-auto max-w-2xl rounded-3xl border border-pink-500 bg-slate-800 p-8 shadow-lg shadow-pink-500/10">
             <p className="text-sm uppercase tracking-[0.2em] text-pink-300">Inmobiliaria</p>
             <h3 className="mt-2 text-3xl font-bold text-white">Inmobiliaria</h3>
-            <p className="mt-6 text-6xl font-bold text-white">$359.000</p>
+            <p className="mt-6 text-6xl font-bold text-white">$299.999</p>
             <p className="mt-2 text-xl text-slate-400">valor inicial</p>
             <p className="mt-5 text-lg text-slate-300">Incluye: diseño + puesta a punto + actualización de registro</p>
             <div className="mt-8 border-t border-slate-700 pt-6">

@@ -28,7 +28,7 @@ const proposals = [
     subtitle: 'Planes Premium, Inmobiliaria y Profesional',
     icon: '📋',
     bgGradient: 'from-emerald-400 via-green-500 to-teal-500',
-    price: '$359.000',
+    price: '$299.999',
     priceMonth: 'Mantenimiento $59.000 /mensual',
     weeks: 1
   },
@@ -48,8 +48,8 @@ const proposals = [
     subtitle: 'Administración profesional de consorcios',
     icon: '🏢',
     bgGradient: 'from-purple-400 via-violet-500 to-purple-600',
-    price: '$599.000',
-    priceMonth: '$35.000/mes',
+    price: '$499.999',
+    priceMonth: '$69.999/mes',
     weeks: 4
   }
 ]
